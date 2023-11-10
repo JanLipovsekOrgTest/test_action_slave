@@ -11,17 +11,17 @@ on:
         description: 'workflow-input-2'
         required: true
         default: ''
-      distinct_id:
-        description: 'required for codex-/return-dispatch@v1 to work'
+      # distinct_id:
+      #   description: 'required for codex-/return-dispatch@v1 to work'
 
 jobs:
-  print_parent_run:
-    runs-on: ubuntu-latest #["self-hosted", "regression-test"] 
-    steps:
-      - name: echo distinct ID ${{ github.event.inputs.distinct_id }}
-        run: echo ${{ github.event.inputs.distinct_id }}
+  # print_parent_run:
+  #   runs-on: ubuntu-latest #["self-hosted", "regression-test"] 
+  #   steps:
+  #     - name: echo distinct ID ${{ github.event.inputs.distinct_id }}
+  #       run: echo ${{ github.event.inputs.distinct_id }}
   step1:
-    needs: [print_parent_run]
+    #needs: [print_parent_run]
     runs-on: ubuntu-latest #["self-hosted", "regression-test"] 
     steps:
       - name: step 1
@@ -64,7 +64,7 @@ jobs:
     - uses: LouisBrunner/checks-action@v1.6.1
       if: always()
       with:
-        sha: ${{ github.event.inputs.workflow-input-1 }}
+        sha: ${{ github.sha }}
         token: ${{ steps.get_installation_token.outputs.token }}
         repo: JanLipovsekOrgTest/test_action_master
         # token: ${{ github.token }}
