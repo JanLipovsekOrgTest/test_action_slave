@@ -70,9 +70,7 @@ jobs:
         repo: JanLipovsekOrgTest/test_action_master
         # token: ${{ github.token }}
         name: Second Job
-        conclusion: ${{ job.status }}
-        details_url: https://josh-ops.com/posts/github-code-coverage/
-        action_url: https://josh-ops.com/posts/github-code-coverage/
-        output: |
-          {"summary":""}
+        #conclusion: ${{ job.status }}
+        conclusion: failure
+
 
