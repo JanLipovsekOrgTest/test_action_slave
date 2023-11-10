@@ -20,7 +20,32 @@ jobs:
     steps:
       - name: echo distinct ID ${{ github.event.inputs.distinct_id }}
         run: echo ${{ github.event.inputs.distinct_id }}
+  step1:
+    needs: [print_parent_run]
+    runs-on: ubuntu-latest #["self-hosted", "regression-test"] 
+    steps:
+      - name: step 1
+        run: |
+          echo "step 1"
+          sleep 5
+  step2:
+    needs: [step1]
+    runs-on: ubuntu-latest #["self-hosted", "regression-test"] 
+    steps:
+      - name: step 2
+        run: |
+          echo "step 2"
+          sleep 5
+  step3:
+    needs: [step2]
+    runs-on: ubuntu-latest #["self-hosted", "regression-test"] 
+    steps:
+      - name: step 3
+        run: |
+          echo "step 3"
+          sleep 5
   build:
+    needs: [step3]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
