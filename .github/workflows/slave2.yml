@@ -32,6 +32,7 @@ jobs:
     - uses: LouisBrunner/checks-action@v1.6.1
       if: always()
       with:
+        repo: JanLipovsekOrgTest/test_action_master
         sha: ${{ github.sha }}
         token: ${{ steps.get_installation_token.outputs.token }}
         # token: ${{ github.token }}
