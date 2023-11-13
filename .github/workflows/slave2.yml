@@ -45,5 +45,5 @@ jobs:
         name: Second Job
         conclusion: ${{ job.status }}
         output: |
-          {"summary":"slave"}
+          {"summary":"new slave"}
 
