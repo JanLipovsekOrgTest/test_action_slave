@@ -28,7 +28,8 @@ jobs:
         echo "Hello, world!"
         echo "workflow-input-1 is ${{ github.event.inputs.workflow-input-1 }}"
         echo "workflow-input-2 is ${{ github.event.inputs.workflow-input-2 }}"
-
+        sleep 300
+        
     - uses: LouisBrunner/checks-action@v1.6.1
       if: always()
       with:
