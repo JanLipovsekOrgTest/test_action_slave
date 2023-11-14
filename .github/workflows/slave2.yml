@@ -45,5 +45,5 @@ jobs:
         name: Second Job
         conclusion: ${{ job.status }}
         output: |
-          {"summary":"new slave"}
+          {"summary":"${{ github.event.inputs.workflow-input-1 }}"}
 
