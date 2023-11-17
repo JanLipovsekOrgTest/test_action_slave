@@ -34,7 +34,8 @@ jobs:
         echo "Hello, world!"
         echo "workflow-input-1 is ${{ github.event.inputs.workflow-input-1 }}"
         echo "workflow-input-2 is ${{ github.event.inputs.workflow-input-2 }}"
-
+        echo "${{ github.event.inputs.workflow-input-2}}"
+        echo "${{ github.event.inputs.workflow-input-2 }}" >> $GITHUB_STEP_SUMMARY  
     - uses: LouisBrunner/checks-action@v1.6.1
       if: always()
       with:
