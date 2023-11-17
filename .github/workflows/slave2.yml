@@ -46,5 +46,5 @@ jobs:
         name: Second Job
         conclusion: ${{ job.status }}
         output: |
-          {"summary":"${{ github.event.inputs.workflow-input-1 }}"}
+          {"summary":"https://github.com/JanLipovsekOrgTest/test_action_slave/actions/runs/${{ github.run_id }}"}
         details_url: https://github.com/JanLipovsekOrgTest/test_action_slave/actions/runs/${{ github.run_id }}
