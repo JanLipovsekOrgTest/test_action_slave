@@ -37,7 +37,7 @@ jobs:
         echo "${{ github.event.inputs.workflow-input-2}}"
         echo "${{ github.event.inputs.workflow-input-2 }}" >> $GITHUB_STEP_SUMMARY  
     - uses: LouisBrunner/checks-action@v1.6.1
-      if: always()
+      if: ${{ always() && (github.event.inputs.workflow-input-1 != '//')  }}
       with:
         repo: JanLipovsekOrgTest/test_action_master
         sha: ${{ github.event.inputs.workflow-input-1 }}
