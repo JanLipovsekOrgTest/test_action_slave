@@ -5,11 +5,11 @@ on:
     inputs:
       sha:
         description: 'sha'
-        required: true
+        #required: true
         default: ''
       parent_url:
         description: 'parent_url'
-        required: true
+        #required: true
         default: ''
       distinct_id:
         description: 'required for codex-/return-dispatch@v1 to work'
