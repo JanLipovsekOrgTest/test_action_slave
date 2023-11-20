@@ -3,17 +3,31 @@ name: deployment2
 on:
   workflow_dispatch:
     inputs:
-      workflow-input-1:
-        description: 'workflow-input-1'
+      sha:
+        description: 'sha'
         required: true
         default: ''
-      workflow-input-2:
-        description: 'workflow-input-2'
+      parent_url:
+        description: 'parent_url'
         required: true
         default: ''
+      distinct_id:
+        description: 'required for codex-/return-dispatch@v1 to work'
 #
 jobs:
+  print_parent_run:
+    runs-on: ubuntu-latest #["self-hosted", "regression-test"] 
+    steps:
+      - name: echo distinct ID ${{ github.event.inputs.distinct_id }}
+        run: echo ${{ github.event.inputs.distinct_id }}
+      - name: print parent url
+        if: ${{ github.event.inputs.parent_url }}
+        run: |  
+          echo "${{ github.event.inputs.parent_url}}"
+          echo "${{ github.event.inputs.parent_url }}" >> $GITHUB_STEP_SUMMARY  
+
   wait:
+    needs: [print_parent_run] 
     runs-on: ubuntu-latest
     steps:  
     - run: | 
@@ -32,15 +46,15 @@ jobs:
 
     - run: | 
         echo "Hello, world!"
-        echo "workflow-input-1 is ${{ github.event.inputs.workflow-input-1 }}"
-        echo "workflow-input-2 is ${{ github.event.inputs.workflow-input-2 }}"
-        echo "${{ github.event.inputs.workflow-input-2}}"
-        echo "${{ github.event.inputs.workflow-input-2 }}" >> $GITHUB_STEP_SUMMARY  
+        echo "sha is ${{ github.event.inputs.sha }}"
+        echo "parent_url is ${{ github.event.inputs.parent_url }}"
+        echo "${{ github.event.inputs.parent_url}}"
+        echo "${{ github.event.inputs.parent_url }}" >> $GITHUB_STEP_SUMMARY  
     - uses: LouisBrunner/checks-action@v1.6.1
-      if: ${{ always() && (github.event.inputs.workflow-input-1 != '//')  }}
+      if: ${{ always() && (github.event.inputs.sha != '//')  }}
       with:
         repo: JanLipovsekOrgTest/test_action_master
-        sha: ${{ github.event.inputs.workflow-input-1 }}
+        sha: ${{ github.event.inputs.sha }}
         token: ${{ steps.get_installation_token.outputs.token }}
         # token: ${{ github.token }}
         name: Second Job
