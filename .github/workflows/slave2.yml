@@ -51,14 +51,50 @@ jobs:
         echo "${{ github.event.inputs.parent_url}}"
         echo "${{ github.event.inputs.parent_url }}" >> $GITHUB_STEP_SUMMARY  
     - uses: LouisBrunner/checks-action@v1.6.1
-      if: ${{ always() && (github.event.inputs.sha != '//')  }}
+      if: ${{ always() && (github.event.inputs.sha != '')  }}
       with:
         repo: JanLipovsekOrgTest/test_action_master
         sha: ${{ github.event.inputs.sha }}
         token: ${{ steps.get_installation_token.outputs.token }}
         # token: ${{ github.token }}
         name: Second Job
-        conclusion: failure # ${{ job.status }}
+        conclusion: skipped # ${{ job.status }}
+        output: |
+          {"summary":"https://github.com/JanLipovsekOrgTest/test_action_slave/actions/runs/${{ github.run_id }}"}
+        details_url: https://github.com/JanLipovsekOrgTest/test_action_slave/actions/runs/${{ github.run_id }}
+  wait2:
+    needs: [build] 
+    runs-on: ubuntu-latest
+    steps:  
+    - run: | 
+        sleep 30    
+  build2:
+    runs-on: ubuntu-latest
+    needs: [wait2]
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: tibdex/github-app-token@v1
+      id: get_installation_token
+      with: 
+        app_id: 429906
+        private_key: ${{ secrets.PRIVATE_KEY }}
+
+    - run: | 
+        echo "Hello, world!"
+        echo "sha is ${{ github.event.inputs.sha }}"
+        echo "parent_url is ${{ github.event.inputs.parent_url }}"
+        echo "${{ github.event.inputs.parent_url}}"
+        echo "${{ github.event.inputs.parent_url }}" >> $GITHUB_STEP_SUMMARY  
+    - uses: LouisBrunner/checks-action@v1.6.1
+      if: ${{ always() && (github.event.inputs.sha != '')  }}
+      with:
+        repo: JanLipovsekOrgTest/test_action_master
+        sha: ${{ github.event.inputs.sha }}
+        token: ${{ steps.get_installation_token.outputs.token }}
+        # token: ${{ github.token }}
+        name: Second Job
+        conclusion: fail # ${{ job.status }}
         output: |
           {"summary":"https://github.com/JanLipovsekOrgTest/test_action_slave/actions/runs/${{ github.run_id }}"}
         details_url: https://github.com/JanLipovsekOrgTest/test_action_slave/actions/runs/${{ github.run_id }}
