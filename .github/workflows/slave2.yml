@@ -58,7 +58,7 @@ jobs:
         token: ${{ steps.get_installation_token.outputs.token }}
         # token: ${{ github.token }}
         name: Second Job
-        conclusion: success # ${{ job.status }}
+        status: in_progress # ${{ job.status }}
         output: |
           {"summary":"https://github.com/JanLipovsekOrgTest/test_action_slave/actions/runs/${{ github.run_id }}"}
         details_url: https://github.com/JanLipovsekOrgTest/test_action_slave/actions/runs/${{ github.run_id }}
